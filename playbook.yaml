@@ -1,0 +1,28 @@
+---
+- name: install apache httpd
+  hosts: [ node1.example.com, node2.example.com ]
+
+  tasks:
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: latest
+
+  - name: Creating a file with content
+    copy:
+      dest: "/var/www/html/index.html"
+      content: |
+        Welcome to myweb server
+
+  - name: Start service httpd, if not started
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+  - firewalld:
+      service: http
+      permanent: yes
+      state: enabled
+
+
