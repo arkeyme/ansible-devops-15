@@ -45,4 +45,4 @@
     notify: update grub
   
   - name: update grub
-    shell: update-grub2
+    shell: grub2-mkconfig
