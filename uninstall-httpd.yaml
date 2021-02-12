@@ -1,14 +1,14 @@
 ---
-- name: install apache httpd
+- name: Uninstall apache httpd
   hosts: [ node1.example.com, node2.example.com ]
-
+  
+  tasks:
   - name: Start service httpd, if not started
     service:
       name: httpd
       state: stopped
       enabled: no
 
-  tasks:
   - name: Uninstall httpd
     yum:
       name: httpd
