@@ -3,11 +3,12 @@
   hosts: [ node1.example.com, node2.example.com ]
   
   tasks:
-  - name: Start service httpd, if not started
+  - name: Stop service httpd and disable it
     service:
       name: httpd
       state: stopped
       enabled: no
+    ignore_errors: yes
 
   - name: Uninstall httpd
     yum:
