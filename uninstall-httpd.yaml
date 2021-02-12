@@ -1,0 +1,25 @@
+---
+- name: install apache httpd
+  hosts: [ node1.example.com, node2.example.com ]
+
+  - name: Start service httpd, if not started
+    service:
+      name: httpd
+      state: stopped
+      enabled: no
+
+  tasks:
+  - name: Uninstall httpd
+    yum:
+      name: httpd
+      state: absent
+
+  - name: Remove file
+    file:
+      path: /var/www/html/index.html
+      state: absent
+
+  - firewalld:
+      service: http
+      permanent: yes
+      state: disabled
