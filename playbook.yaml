@@ -35,7 +35,7 @@
     register: grub_cmdline_check
     changed_when: false
 
-  - name: insert splash if missing
+  - name: insert net.ifnames and biosdevname if missing
     lineinfile:
       backrefs: true
       path: /etc/default/grub
