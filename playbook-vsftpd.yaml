@@ -37,3 +37,9 @@
       state: yes
       persistent: yes
     when: var_exists.rc == 0
+
+  - name: Allow vsftpd to modify files in "{{ vsftp_root }}"
+    sefcontext:
+      target: "{{ vsftp_root }}(/.*)?"
+      setype: ftpd_anon_write
+      state: present
