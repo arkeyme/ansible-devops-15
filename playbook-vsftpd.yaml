@@ -25,11 +25,15 @@
       state: started
       enabled: yes
 
-  - name: Allow vsftpd to write files to "{{ vsftp_root }}"
-    sefcontext:
-      target: "{{ vsftp_root }}(/.*)?"
-      setype: ftpd_anon_write
-      state: present
+  - name: Check if ftpd_anon_write exists
+    shell: getsebool -a | grep '^ftpd_anon_write\b'
+    register: var_exists
+    failed_when: false
+    changed_when: false
 
-  - name: Apply new SELinux file context to filesystem
-    command: restorecon -irv {{ vsftp_root }}
+  - name: Allow access to anon directories
+    seboolean:
+      name: ftpd_anon_write
+      state: yes
+      persistent: yes
+    when: var_exists.rc == 0
