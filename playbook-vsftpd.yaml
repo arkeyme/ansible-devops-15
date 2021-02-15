@@ -25,11 +25,11 @@
       state: started
       enabled: yes
 
-- name: Allow vsftpd to write files to "{{ vsftp_root }}"
-  sefcontext:
-    target: "{{ vsftp_root }}(/.*)?"
-    setype: ftpd_anon_write
-    state: present
+  - name: Allow vsftpd to write files to "{{ vsftp_root }}"
+    sefcontext:
+      target: "{{ vsftp_root }}(/.*)?"
+      setype: ftpd_anon_write
+      state: present
 
-- name: Apply new SELinux file context to filesystem
-  command: restorecon -irv {{ vsftp_root }}
+  - name: Apply new SELinux file context to filesystem
+    command: restorecon -irv {{ vsftp_root }}
