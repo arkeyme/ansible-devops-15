@@ -28,6 +28,7 @@
       recurse: yes
       owner: ftp
       mode: '0755'
+    notify: restart service
 
   - name: Start service vsftpd, if not started
     service:
