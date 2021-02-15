@@ -21,6 +21,14 @@
       dest: /etc/vsftpd/vsftpd.conf
     notify: restart service
 
+  - name: Recursively change ownership of a directory
+    file:
+      path: "{{ vsftp_root }}"
+      state: directory
+      recurse: yes
+      owner: ftp
+      mode: '0755'
+      
   - name: Start service vsftpd, if not started
     service:
       name: "{{ service_name }}"
@@ -45,3 +53,4 @@
     service:
       name: "{{ service_name }}"
       state: restarted
+
