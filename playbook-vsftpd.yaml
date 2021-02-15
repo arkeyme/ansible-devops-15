@@ -1,0 +1,35 @@
+---
+- name: install apache httpd
+  hosts: [ node1.example.com, node2.example.com ]
+  vars:
+      anonymous_enable: yes
+      local_enable: yes
+      write_enable: yes
+      anon_upload_enable: yes
+      vsftp_root: /var/ftp/pub
+
+  tasks:
+  - name: Install vsftpd
+    yum:
+      name: vsftpd
+      state: latest
+
+  - name: use template to copy FTP config
+    template:
+      src: vsftpd.j2
+      dest: /etc/vsftpd/vsftpd.conf
+
+  - name: Start service vsftpd, if not started
+    service:
+      name: vsftpd
+      state: started
+      enabled: yes
+
+- name: Allow vsftpd to write files to "{{ vsftp_root }}"
+  sefcontext:
+    target: "{{ vsftp_root }}(/.*)?"
+    setype: ftpd_anon_write
+    state: present
+
+- name: Apply new SELinux file context to filesystem
+  command: restorecon -irv {{ vsftp_root }}
