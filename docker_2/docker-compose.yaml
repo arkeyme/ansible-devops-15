@@ -3,7 +3,8 @@ services:
   redis:
     image: redis
   web:
-    build: .
-    dockerfile: Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports: 
       - 8081:80
