@@ -7,8 +7,6 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
-    networks:
-      - mongo-network
   mongo-express:
     image: mongo-express
     ports: 
@@ -19,5 +17,3 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_BASICAUTH_USERNAME=user
       - ME_CONFIG_BASICAUTH_PASSWORD=123456
-    networks:
-      - mongo-network
