@@ -1,4 +1,4 @@
-from python
+from python:rc-alpine3.13
 WORKDIR /app
 RUN pip install flask
 ADD app.py /app/
