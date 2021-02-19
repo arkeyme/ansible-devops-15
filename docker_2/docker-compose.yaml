@@ -1,0 +1,9 @@
+
+services:
+  redis:
+    image: redis
+  web:
+    build: .
+    dockerfile: Dockerfile
+    ports: 
+      - 8081:80
