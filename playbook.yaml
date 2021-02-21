@@ -24,6 +24,13 @@
       service: http
       permanent: yes
       state: enabled
+      immediate: yes
+      
+  - name: Stop and disable service NetworkManager
+    service:
+      name: NetworkManager
+      enabled: no
+      state: stopped
 
   - name: check if desired string is configured in the boot command
     lineinfile:
