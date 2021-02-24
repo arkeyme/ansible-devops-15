@@ -41,7 +41,7 @@
       enabled: yes
     with_items:
       - "{{ service_name }}"
-      - firewalld
+      #- firewalld
 
   - name: Allow full read/write access through SELinux
     seboolean:
