@@ -44,7 +44,7 @@
 
   - name: Check if ftp_home_dir exists
     shell: getsebool -a | grep '^ftp_home_dir\b'
-    register: var_exists
+    register: result
     failed_when: false
     changed_when: false
     tags: vsftpd
@@ -54,7 +54,7 @@
       name: ftp_home_dir
       state: yes
       persistent: yes
-    when: var_exists.rc == 0
+    when: result is succeeded
     tags: vsftpd
 
   handlers:
