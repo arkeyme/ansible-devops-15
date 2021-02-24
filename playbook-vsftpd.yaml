@@ -33,9 +33,12 @@
 
   - name: Start service vsftpd, if not started
     service:
-      name: ["{{ service_name }}", firewalld ]
+      name: "{{ item }}"
       state: started
       enabled: yes
+    with_items:
+      - "{{ service_name }}"
+      - firewalld
 
   - name: Allow full read/write access through SELinux
     seboolean:
