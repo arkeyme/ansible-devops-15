@@ -38,7 +38,7 @@
 
   - name: Allow full read/write access through SELinux
     seboolean:
-      name: [ ftpd_full_access, ftpd_anon_write ]
+      name: ftpd_full_access
       state: yes
       persistent: yes
 
