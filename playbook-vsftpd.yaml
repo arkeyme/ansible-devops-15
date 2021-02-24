@@ -8,6 +8,7 @@
       anon_upload_enable: yes
       vsftp_root: /var/ftp/pub
       service_name: vsftpd
+      service: ftp
 
   tasks:
   - name: Install vsftpd and policycoreutils-python-utils
@@ -42,12 +43,19 @@
       state: yes
       persistent: yes
 
+- name: open network port
+  firewalld:
+    service: "{{ service }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+    
   handlers:
   - name: restart service
     service:
       name: "{{ service_name }}"
       state: restarted
-
+  
 # ftpd_anon_write --> on
 # ftpd_connect_all_unreserved --> off
 # ftpd_connect_db --> off
