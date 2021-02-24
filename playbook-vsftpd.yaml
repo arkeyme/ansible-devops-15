@@ -10,9 +10,9 @@
       service_name: vsftpd
 
   tasks:
-  - name: Install vsftpd
+  - name: Install vsftpd and policycoreutils-python-utils
     yum:
-      name: vsftpd
+      name: [ vsftpd, policycoreutils-python-utils ]
       state: latest
 
   - name: use template to copy FTP config
@@ -36,26 +36,11 @@
       state: started
       enabled: yes
 
-  - name: Allow full read/write access through SELinux for el7+
+  - name: Allow full read/write access through SELinux
     seboolean:
-      name: ftpd_full_access
+      name: [ ftpd_full_access, ftpd_anon_write ]
       state: yes
       persistent: yes
-
-  - name: Check if ftp_home_dir exists
-    shell: getsebool -a | grep '^ftp_home_dir\b'
-    register: result
-    failed_when: false
-    changed_when: false
-    tags: vsftpd
-
-  - name: Allow access to home directories
-    seboolean:
-      name: ftp_home_dir
-      state: yes
-      persistent: yes
-    when: result is succeeded
-    tags: vsftpd
 
   handlers:
   - name: restart service
@@ -63,3 +48,11 @@
       name: "{{ service_name }}"
       state: restarted
 
+# ftpd_anon_write --> on
+# ftpd_connect_all_unreserved --> off
+# ftpd_connect_db --> off
+# ftpd_full_access --> on
+# ftpd_use_cifs --> off
+# ftpd_use_fusefs --> off
+# ftpd_use_nfs --> off
+# ftpd_use_passive_mode --> off
