@@ -43,13 +43,13 @@
       state: yes
       persistent: yes
 
-- name: open network port
-  firewalld:
-    service: "{{ service }}"
-    permanent: yes
-    state: enabled
-    immediate: yes
-    
+  - name: open network port
+    firewalld:
+      service: "{{ service }}"
+      permanent: yes
+      state: enabled
+      immediate: yes
+      
   handlers:
   - name: restart service
     service:
