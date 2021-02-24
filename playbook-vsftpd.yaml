@@ -13,8 +13,11 @@
   tasks:
   - name: Install vsftpd and policycoreutils-python-utils
     yum:
-      name: [ vsftpd, policycoreutils-python-utils ]
+      name: "{{ item }}"
       state: latest
+    with_items:
+      - "{{ service_name }}"
+      - policycoreutils-python-utils
 
   - name: use template to copy FTP config
     template:
@@ -48,10 +51,12 @@
 
   - name: open network port
     firewalld:
-      service: "{{ service }}"
+      service: "{{ item }}"
       permanent: yes
       state: enabled
       immediate: yes
+    with_items:
+      - ftp
       
   handlers:
   - name: restart service
