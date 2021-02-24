@@ -41,7 +41,7 @@
       enabled: yes
     with_items:
       - "{{ service_name }}"
-      #- firewalld
+      - firewalld
 
   - name: Allow full read/write access through SELinux
     seboolean:
@@ -69,11 +69,3 @@
       name: "{{ service_name }}"
       state: restarted
   
-# ftpd_anon_write --> on
-# ftpd_connect_all_unreserved --> off
-# ftpd_connect_db --> off
-# ftpd_full_access --> on
-# ftpd_use_cifs --> off
-# ftpd_use_fusefs --> off
-# ftpd_use_nfs --> off
-# ftpd_use_passive_mode --> off
