@@ -28,7 +28,7 @@
 
   - name: Recursively change ownership of a directory
     file:
-      path: "{{ vsftp_root }}"/pub
+      path: "{{ vsftp_root }}/pub"
       state: directory
       recurse: yes
       owner: ftp
