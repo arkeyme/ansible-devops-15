@@ -1,14 +1,16 @@
-anonymous_enable={{ anonymous_enable }}
+anon_mkdir_write_enable={{ anonymous_enable }}
 anon_other_write_enable={{ anonymous_enable }}
+anon_root={{ vsftp_root }}
+anon_upload_enable={{ anon_upload_enable }}
+anon_world_readable_only={{ anonymous_enable }}
+anonymous_enable={{ anonymous_enable }}
+ascii_upload_enable=YES
+connect_from_port_20=YES
+dirmessage_enable=YES
+listen=YES
 local_enable={{ local_enable }}
 write_enable={{ write_enable }}
-anon_upload_enable={{ anon_upload_enable }}
-anon_mkdir_write_enable={{ anonymous_enable }}
-dirmessage_enable=YES
-xferlog_enable=YES
-connect_from_port_20=YES
-pam_service_name=vsftpd
-userlist_enable=YES
-chown_uploads=YES
-chown_username=ftp
-
+nopriv_user={{ nopriv_user }}
+ssl_enable=NO
+syslog_enable=YES
+write_enable=YES

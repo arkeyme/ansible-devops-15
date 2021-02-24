@@ -6,9 +6,10 @@
       local_enable: yes
       write_enable: yes
       anon_upload_enable: yes
-      vsftp_root: /var/ftp/pub
+      vsftp_root: /var/ftp
       service_name: vsftpd
       service: ftp
+      nopriv_user: ftp
 
   tasks:
   - name: Install vsftpd and policycoreutils-python-utils
@@ -27,12 +28,23 @@
 
   - name: Recursively change ownership of a directory
     file:
-      path: "{{ vsftp_root }}"
+      path: "{{ vsftp_root }}"/pub
       state: directory
       recurse: yes
       owner: ftp
       mode: '0755'
     notify: restart service
+
+  - name: Allow full read/write access through SELinux
+    seboolean:
+      name: ftpd_full_access
+      state: yes
+      persistent: yes
+
+  - name: restart service
+    service:
+      name: "{{ service_name }}"
+      state: restarted
 
   - name: Start service vsftpd, if not started
     service:
@@ -41,14 +53,8 @@
       enabled: yes
     with_items:
       - "{{ service_name }}"
-      #- firewalld
-
-  - name: Allow full read/write access through SELinux
-    seboolean:
-      name: ftpd_full_access
-      state: yes
-      persistent: yes
-
+      - firewalld
+  
   - name: open network port
     firewalld:
       service: "{{ item }}"
@@ -57,11 +63,6 @@
       immediate: yes
     with_items:
       - ftp
-  
-  - name: restart service
-    service:
-      name: "{{ service_name }}"
-      state: restarted
       
   handlers:
   - name: restart service
