@@ -3,7 +3,7 @@ services:
   redis:
     image: redis
     volumes:
-      redis-data:/var/lib/redis/
+      - redis-data:/var/lib/redis/
   web:
     build:
       context: .
