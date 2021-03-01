@@ -3,7 +3,7 @@ services:
   redis:
     image: redis
     volumes:
-      redis_data:/var/lib/redis/
+      redis-data:/var/lib/redis/
   web:
     build:
       context: .
@@ -11,5 +11,5 @@ services:
     ports: 
       - 8080:80
 volumes:
-  redis_data:
+  redis-data:
     driver: local
